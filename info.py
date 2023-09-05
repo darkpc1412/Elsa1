@@ -87,7 +87,7 @@ auth_channel = environ.get('AUTH_CHANNEL')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 # Set to False inside the bracket if you don't want to use Request Channel else set it to Channel ID
 req_channel = environ.get('REQ_CHANNEL')
-REQ_CHANNEL = int(req_channel) if req_channel and id_pattern.search(req_channel) else False
+REQ_CHANNEL = int(req_channel) if req_channel and id_pattern.search(req_channel) else None
 JOIN_REQS_DB = environ.get("JOIN_REQS_DB", DATABASE_URI)
 
 #url links
