@@ -85,6 +85,7 @@ DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://peter:peter@cluster0.y
 DATABASE_NAME = environ.get('DATABASE_NAME', "peter")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
 MONGO_URL = os.environ.get('MONGO_URL', "")
+JOIN_REQS_DB = environ.get("JOIN_REQS_DB", DATABASE_URI)
 
 #Downloader
 DOWNLOAD_LOCATION = environ.get("DOWNLOAD_LOCATION", "./DOWNLOADS/AudioBoT/")
