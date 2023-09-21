@@ -7,7 +7,7 @@ import math
 import random
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from Script import script
-import pyrogram
+
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
 from info import ADMINS, AUTH_CHANNEL, FILE_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, NOR_IMG, AUTH_GROUPS, \
@@ -1365,7 +1365,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data.startswith("setgs"):
         ident, set_type, status, grp_id = query.data.split("#")
-        grpid = await active_connection(str(query.from_user.id))
+        if query.message.chat.type == enums.ChatType.PRIVATE:
+            grpid = await active_connection(str(query.from_user.id))
+        else:
+            grpid = query.message.chat.id
 
         if str(grp_id) != str(grpid):
             await query.message.edit("Your Active Connection Has Been Changed. Go To /settings.")
