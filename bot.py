@@ -1,6 +1,5 @@
 import logging
 import logging.config
-from typing import Optional, Union, AsyncGenerator
 
 # Get logging configurations
 logging.config.fileConfig('logging.conf')
@@ -9,12 +8,12 @@ logging.getLogger("pyrogram").setLevel(logging.ERROR)
 logging.getLogger("imdbpy").setLevel(logging.ERROR)
 
 
-from pyrogram import Client, __version__, filters, types
+from pyrogram import Client, __version__, filters
 from pyrogram.raw.all import layer
 from database.ia_filterdb import Media
 from database.users_chats_db import db
 from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR, LOG_CHANNEL, PORT
-from utils import temp, scheduler
+from utils import temp
 from typing import Union, Optional, AsyncGenerator
 from pyrogram import types
 from Script import script 
@@ -31,7 +30,7 @@ class Bot(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
-            workers=500,
+            workers=150,
             plugins={"root": "plugins"},
             sleep_threshold=5,
         )
@@ -42,12 +41,12 @@ class Bot(Client):
         temp.BANNED_CHATS = b_chats
         await super().start()
         await Media.ensure_indexes()
-        self.me = await self.get_me()
-        temp.ME = self.me.id
-        temp.U_NAME = self.me.username
-        temp.B_NAME = self.me.first_name
-        self.username = '@' + self.me.username
-        logging.info(f"{self.me.first_name} with for Pyrogram v{__version__} (Layer {layer}) started on {me.username}.")
+        me = await self.get_me()
+        temp.ME = me.id
+        temp.U_NAME = me.username
+        temp.B_NAME = me.first_name
+        self.username = '@' + me.username
+        logging.info(f"{me.first_name} with for Pyrogram v{__version__} (Layer {layer}) started on {me.username}.")
         logging.info(LOG_STR)
         tz = pytz.timezone('Asia/Kolkata')
         today = date.today()
