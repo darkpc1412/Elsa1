@@ -114,6 +114,7 @@ APPROVED = environ.get("APPROVED_WELCOME", "on").lower()
 SUPPORT_CHAT_ID = int(support_chat_id) if support_chat_id and id_pattern.search(support_chat_id) else None
 DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in environ.get('DELETE_CHANNELS', '0').split()]
 PORT = os.environ.get("PORT", "8080")
+MAX_B_TN = environ.get("MAX_B_TN", "5")
 MAX_BTN = int(environ.get('MAX_BTN', "7"))
 S_GROUP = environ.get('S_GROUP',"https://t.me/petergriffinsupport")
 MAIN_CHANNEL = environ.get('MAIN_CHANNEL',"https://t.me/film_cube_group")
